@@ -18,8 +18,9 @@ class Optimizer:
             [np.zeros_like(param), np.zeros_like(param)])
 
         self._b1, self._b2 = .9, .999
-        self.optimizers = {'rms': self.rms, 'adam': self.adam,
-                           'adamx': self.adamx, 'momento': self.momento, 'tempo': self.tempo}
+        self.optimizers = {'rms': self.rms, 'adam': self.adam,'descent':self.descent
+                           'adamx': self.adamx, 'momento': self.momento, 
+                           'tempo': self.tempo,, 'adagard': self.adagard}
         self._op = self.optimizers[self._oname]
 
     def set_momentum(self, m):
