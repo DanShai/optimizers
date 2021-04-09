@@ -70,3 +70,20 @@ class Optimizer:
         b1, alpha = self._b1, self._eta
         self._v = self._b1 * self._v + (1-self._b1) * self.dparam
         self.param = self.param - self._eta * self._v
+
+        
+    def delay(self):
+        self._t += 1
+        self._eps = self._eps/(1+self._t/self._decay)
+    def adagard(self):
+        eps, e = self._eps, self._e
+        self._mem = self._mem + self._dparam*self._dparam
+        q = self._dparam / (np.sqrt(self._mem) + e)
+        self._param = self._param - eps * q
+
+    def descent(self):
+        eps = self._eps
+        lam = self._lambda
+        # self._dparam = self._dparam + lam*self._param
+        dp = self._dparam + lam*self._param
+        self._param = self._param - eps * dp
